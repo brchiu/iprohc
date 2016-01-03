@@ -35,5 +35,5 @@ DISTCHECK_CONFIGURE_FLAGS = \
 # extra files for releases
 EXTRA_DIST = \
 	autogen.sh \
-	bzr_revno
+	git_ref
 
