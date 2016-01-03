@@ -1,3 +1,9 @@
+env:
+  global:
+   # The next declaratioddn is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "SubWrAYkFbAea28fF9ndkiZo4j0qA6xiljfkVodYQP3c7K8mV5doIN59h6ehuVqtqXCVo1yCRjLTEJS+GNR1u2sA+5iPjmMBjcnWY3kSTcfOquOTqsokUqdX3vKlJ/m4T8vanCU50kJhH0svyLXN02QRs9F4O3pYMzJXo0aJgaROKO2JWWKFcUCEjn/TOg5Nmi4oJTBX710y+TxbrdwZTyklyD2yjinN6tCw21/P6qcVuqJS6g65AAKI6chilHcfLRPsuuFGeXRw7vZaLVrNyt6qG0bXPRCjj9493xbkhAHX1y3y9bW/+yRRJBo+zS3/evRCeb3nSCs320S6y/JTG2rffpHoO4HiD8r3MfhSZ/NNpSlIPW0z9PRQTiGRpr/3UrTMtvWCm4pOkk2pdE72o4SMJMF89y+tMihPPWouQgy+tM/U5J3Z0np4icxSOwmidx0GYV0s6V66pwBBaps/TE1oJvj3Rxx/eZDSPCI/yCqnSm8SAUasUfqwa1EjskYeiG7yQNIYQyk4mZkuPp0dPgZf7AU5cWT2JKNVsSl2yl3XvAfKoi5hjJVEM8wzgevgy196rYfxZX/mppFg3Zr3UHga32l4pDTQ4e0onDyVAuBQC7rk9aqo+kU2YJUMOEajMLAlGenlg7R80SEViEhDqYwZuN9NmAfrJFFGDs7os3k="
+
 language: c
 compiler:
    - gcc
@@ -9,3 +15,14 @@ before_install:
    - tar -xf /tmp/rohc-1.7.0.tar.xz
    - cd rohc-1.7.0/ && ./configure --prefix=/usr && make clean && make all && sudo make install && cd -
 script: ./autogen.sh --disable-doc-html && make clean && make all && make check && make distcheck
+
+addons:
+  coverity_scan:
+    project:
+      name: "didier-barvaux/iprohc"
+    notification_email: didier@rohc-lib.org
+    build_command_prepend: ./autogen.sh --disable-doc-html --disable-doc-man && make clean
+    build_command: make all check
+    branch_pattern: coverity_scan
+
+
