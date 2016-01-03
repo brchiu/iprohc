@@ -4,9 +4,9 @@ compiler:
    - gcc
 before_install:
    - sudo apt-get update -qq
-   - sudo apt-get install -y libgnutls28-dev libyaml-dev
+   - sudo apt-get install -y libgnutls28-dev libyaml-dev help2man
    # --no-check-certificate is required because Ubuntu certificate store is outdated
    - wget --no-check-certificate https://rohc-lib.org/download/rohc-1.7.x/1.7.0/rohc-1.7.0.tar.xz -O /tmp/rohc-1.7.0.tar.xz
    - tar -xvf /tmp/rohc-1.7.0.tar.xz
    - cd rohc-1.7.0/ && ./configure --prefix=/usr && make clean && make all && sudo make install && cd -
-script: ./autogen.sh && make clean && make all && make check && make distcheck
+script: ./autogen.sh --disable-doc-html && make clean && make all && make check && make distcheck
